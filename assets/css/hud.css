@@ -1,0 +1,213 @@
+#hud {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    width: 720px;
+    aspect-ratio: auto 720 / 480;
+    max-width: 720px;
+    max-height: 480px;
+    position: absolute;
+}
+
+#topButtonContainer {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 12px;
+    position: relative;
+    z-index: 130;
+}
+
+#buttonContainer {
+    display: none;
+    align-items: end;
+    justify-content: space-around;
+    gap: 15rem;
+    width: 100%;
+    margin: 0px 0px;
+}
+
+.leftButtonSubContainer,
+.rightButtonSubContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 110px;
+    height: 80px;
+
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color:#f7cf1f;
+    width: 50px;
+    height: 50px;
+    border: black solid 1px;
+}
+
+.infoButton {
+    margin-right: 16px;
+}
+
+.controlIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.throwIcon {
+    width: 30px;
+    height: 30px;
+}
+
+#closeOverlayButton {
+    position: relative;
+    top: -150px;
+    right: -516px;
+}
+
+#informationPopUpContainer {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 150;
+    background-color: rgba(0,0,0,0.7);
+    width: 720px;
+    aspect-ratio: 720 / 480;
+}
+
+#pauseOverlay {
+    position: absolute;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.4);
+    z-index: 120;
+}
+
+#pauseOverlay span {
+    color: white;
+    font-family: 'Lilita One', sans-serif;
+    font-size: 28px;
+}
+
+.menuPointContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    border-bottom: 3px solid black;
+    border-radius: 8px;
+    width: 478px;
+    margin-top: 16px;
+    height: 60px;
+}
+
+.menuPoint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    background-color: rgb(246, 187, 98);
+    height: 40px;
+    border-radius: 8%;
+}
+
+.menuPoint:hover {
+    transform: scale(0.93);
+    box-shadow: 0px 0px 8px 4px rgba(255, 255, 255, 0.9);
+}
+
+.menuPointText {
+    color: black;
+    font-size: 24px;
+    font-family: 'Lilita One', sans-serif;
+}
+
+#informationPopUp {
+    background-color: rgb(188, 122, 15);
+    width: 500px;
+    height: 251px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 8px;
+}
+
+.gameInformation {
+    margin: 0px 16px;
+}
+
+.controlKeyContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-top: 32px;
+    width: 460px;
+}
+
+.controlInformation {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 16px;
+    width: 230px;
+}
+
+.controlKeyImage {
+    width: 20px;
+    height: 20px;
+}
+
+.controlSpaceKeyImage {
+    height: 30px;
+    width: 30px;
+}
+
+.gameInformationText {
+    color: black;
+    font-size: 20px;
+    font-family: 'Lilita One', sans-serif;
+    text-align: start;
+    text-decoration: none;
+}
+
+.aboutSection {
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    gap: 32px;
+}
+
+.linkToSource:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+.active {
+    box-shadow: 0px 0px 8px 4px rgba(255, 255, 255, 0.9);
+}
+
+.closeButton {
+    width: 30px;
+    height: 30px;
+}
+
+@media only screen and (min-width: 1024px) {
+    /* Desktop: hide throw icon and show 'SPACE - Throw' text in info overlay */
+    .controlSpaceKeyImage {
+        display: none;
+    }
+
+    .spaceLabel::before {
+        content: 'SPACE - ';
+    }
+}

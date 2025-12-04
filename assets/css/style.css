@@ -1,0 +1,516 @@
+@import url('./fonts.css');
+@import url('./animation.css');
+
+body {
+    padding: 0;
+    margin: 0;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../img/pageBackground.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    font-size: 16px; /* Basis-Schriftgröße */
+}
+
+.button,
+.menuPoint {
+    cursor: pointer;
+}
+
+h1 {
+    color: rgb(0, 0, 0);
+    font-family: 'Lilita One', sans-serif;
+    font-size: 3.5rem; /* statt 56px */
+    text-shadow: 0px 0px 8px rgba(252, 230, 119, 1);
+}
+
+main {
+    width: 100%;
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.test {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 999;
+    aspect-ratio: auto 720 / 480;
+    max-width: 720px;
+    max-height: 480px;
+    width: 100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.test span {
+    color: white;
+    font-size: 1.5rem; /* statt 24px */
+    font-family: 'Lilita One', sans-serif;
+}
+
+#startScreenContainer,
+#endScreenContainer {
+    aspect-ratio: auto 720 / 480;
+    max-width: 720px;
+    max-height: 480px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: auto;
+}
+
+#endScreenContainer {
+    display: none;
+    position: absolute;
+}
+
+#startScreen,
+#endScreen {
+    height: 100%;
+    width: 100%;
+}
+
+#endScreen {
+    animation: slideIn 1s ease-in-out;
+}
+
+#startGameButton,
+#restartGameButton {
+    position: absolute;
+    bottom: 10px;
+    padding: 0.5rem 2rem; /* statt 8px 32px */
+    z-index: 99;
+
+    border-radius: 16px;
+    border: 1px solid black;
+
+    font-size: 2.5rem; /* statt 40px */
+    font-family: 'Lilita One', sans-serif;
+
+    background-color: #FFD100;
+    cursor: pointer;
+}
+
+#startGameButton:hover,
+#restartGameButton:hover {
+    transform: scale(1.03);
+    background-color: #ffdb38;
+}
+
+#startGameButton:active
+#restartGameButton:active {
+    transform: scale(.95);
+    background-color: #f7cf1f;
+}
+
+canvas {
+    display: none;
+    -webkit-box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7); 
+    box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 720 / 480;
+}
+
+@media only screen and (max-height: 480px) {
+    /* Small height screens (typically phones in landscape):
+       Let width drive the scaling instead of forcing full viewport height
+       to avoid squashed / cropped canvas. */
+
+    canvas {
+        width: 100vw;
+        height: auto;
+        -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.7); 
+        box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.7);
+    }
+
+    h1 {
+        display: none;
+    }
+
+    #endScreenContainer,
+    #startScreenContainer,
+    #hud,
+    #informationPopUpContainer  {
+        height: auto;
+        max-height: 100vh;
+    }
+}
+
+@media only screen and (max-width: 620px) {
+    #informationPopUp {
+        width: 70%;
+
+    }
+    .menuPointContainer {
+        gap: 16px;
+        width: 280px;
+        height: 60px;
+    }
+
+    .menuPoint {
+        width: 94px;
+        height: 40px;
+    }
+
+    .menuPointText {
+        font-size: 15px;
+    }
+
+    .gameInformationText {
+        font-size: 14px;
+    }
+
+    #closeOverlayButton {
+        right: -317px;
+        top: -150px;
+    }
+
+    .controlKeyImage {
+        height: 50px;
+        width: 50px;
+    }
+
+    .controlSpaceKeyImage {
+        height: 50px;
+        width: 76px;
+    }
+
+    .controlKeyContainer {
+        width: 270px;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100vw;
+    }
+
+    #buttonContainer {
+        display: flex;
+        gap: 0px;
+    }
+
+    #endScreenContainer,
+    #startScreenContainer,
+    #endScreen,
+    #hud, 
+    #informationPopUpContainer  {
+        width: 100vw;
+    }
+
+}
+
+@media only screen and (max-width: 500px) and (min-height: 481px) {
+    .test {
+        display: flex;
+    }
+}
+
+@media only screen and (min-width: 1024px) {
+    
+}
+
+@media only screen and (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    #informationPopUp {
+        width: 90%;
+        height: auto;
+    }
+
+    .controlKeyContainer {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (max-height: 480px) and (orientation: landscape) {
+    body {
+        font-size: 12px;
+    }
+
+    h1 {
+        display: none;
+    }
+
+    /* On landscape phones, use full width and keep aspect ratio
+       so the game area is centered and not cropped. */
+    #startScreenContainer,
+    #endScreenContainer,
+    #hud {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+    }
+
+    canvas {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+    }
+}
+
+/* Rename the class to be more descriptive and update styles */
+.orientation-message {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    top: 0;
+    left: 0;
+}
+
+#orientationMessageContainer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+}
+
+.orientation-message span {
+    color: white;
+    font-size: 1.8rem;
+    font-family: 'Lilita One', sans-serif;
+    text-align: center;
+    padding: 2rem;
+    max-width: 80%;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* Update media queries for better orientation detection */
+@media screen and (orientation: portrait) {
+    .orientation-message {
+        display: flex;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    .orientation-message {
+        display: none;
+    }
+}
+
+/* Update media queries for better orientation detection */
+@media screen and (orientation: portrait) {
+    #orientationMessageContainer {
+        display: flex;
+    }
+}
+
+@media screen and (orientation: landscape) {
+    #orientationMessageContainer {
+        display: none;
+    }
+}
+
+#canvasContainer {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    height: auto;
+}
+
+canvas {
+    display: none;
+    -webkit-box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7); 
+    box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 720 / 480;
+}
+
+#canvasContainer .orientation-message {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Mobile and Tablet Optimizations */
+@media only screen and (max-width: 768px) {
+    body {
+        padding: 0;
+        margin: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+    }
+    
+    h1 {
+        font-size: 2.5rem;
+        margin: 0.5rem 0;
+    }
+    
+    main {
+        height: calc(100vh - 4rem);
+        justify-content: center;
+    }
+    
+    #canvasContainer, 
+    #startScreenContainer,
+    #endScreenContainer {
+        width: 100%;
+        max-width: 100%;
+        height: auto;
+    }
+    
+    #startScreen,
+    #endScreen {
+        object-fit: contain;
+    }
+    
+    #startGameButton,
+    #restartGameButton {
+        font-size: 2rem;
+        padding: 0.4rem 1.5rem;
+    }
+    
+    #hud {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+    }
+    
+    .button {
+        touch-action: manipulation;
+    }
+    
+    .controlIcon {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+
+/* Specific styles for very small devices */
+@media only screen and (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .controlIcon {
+        width: 1.8rem;
+        height: 1.8rem;
+    }
+    
+    #startGameButton,
+    #restartGameButton {
+        font-size: 1.8rem;
+        padding: 0.3rem 1.2rem;
+    }
+}
+
+/* Landscape orientation specific styles */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    h1 {
+        display: none;
+    }
+    
+    main {
+        height: 100vh;
+    }
+    
+    #canvasContainer, 
+    #startScreenContainer {
+        width: 100vw;
+        height: auto;
+        max-width: 100%;
+        max-height: 100vh;
+        aspect-ratio: 720 / 480;
+    }
+    
+    canvas, 
+    #startScreen {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+        margin: 0 auto;
+    }
+}
+
+/* Make sure startScreenContainer matches canvas size in landscape mode */
+@media screen and (orientation: landscape) {
+    #startScreenContainer {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+    }
+}
+
+/* Landscape orientation specific styles for small height screens */
+@media screen and (orientation: landscape) and (max-height: 500px) {
+    h1 {
+        display: none;
+    }
+    
+    main {
+        height: 100vh;
+    }
+    
+    #canvasContainer, 
+    #startScreenContainer {
+        width: 100vw;
+        height: auto;
+        max-width: 100%;
+        max-height: 100vh;
+        aspect-ratio: 720 / 480;
+    }
+
+    #startScreenContainer,
+    #endScreenContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+    }
+
+    #playButton,
+    #soundButton,
+    #helpButton {
+        width: 40px;
+        height: 40px;
+    }
+    
+    canvas, 
+    #startScreen {
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+        margin: 0 auto;
+    }
+}
+
+@media only screen and (max-width: 768px) and (orientation: landscape) {
+    #startScreenContainer,
+    #endScreenContainer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: auto;
+        max-height: 100vh;
+    }
+}

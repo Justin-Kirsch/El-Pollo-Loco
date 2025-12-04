@@ -1,0 +1,10 @@
+@keyframes slideIn {
+    from {
+      transform: scale(3);
+    }
+  
+    to {
+      transform: scale(1);
+    }
+  }
+  

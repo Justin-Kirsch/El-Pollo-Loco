@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#000000">
+    <title>El Pollo Loco</title>
+    <link rel="stylesheet" href="./assets/css/animation.css">
+    <link rel="stylesheet" href="./assets/css/hud.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="shortcut icon" href="./assets/img/favicon.png" type="image/x-icon">
+    <script defer src="./assets/models/world.class.js"></script>
+    <script defer src="./assets/models/drawable-object.class.js"></script>
+    <script defer src="./assets/models/statusbar.class.js"></script>
+    <script defer src="./assets/models/healthbar.class.js"></script>
+    <script defer src="./assets/models/coinbar.class.js"></script>
+    <script defer src="./assets/models/bottlebar.class.js"></script>
+    <script defer src="./assets/models/endboss-healthbar.class.js"></script>
+    <script defer src="./assets/models/moveable-object.class.js"></script>
+    <script defer src="./assets/models/keybindings.class.js"></script>
+    <script defer src="./assets/models/character.class.js"></script>
+    <script defer src="./assets/models/chicken.class.js"></script>
+    <script defer src="./assets/models/smallChicken.class.js"></script>
+    <script defer src="./assets/models/endboss.class.js"></script>
+    <script defer src="./assets/models/bottle.class.js"></script>
+    <script defer src="./assets/models/coin.class.js"></script>
+    <script defer src="./assets/models/background-object.class.js"></script>
+    <script defer src="./assets/models/cloud.class.js"></script>
+    <script defer src="./assets/models/level.class.js"></script>
+    <script defer src="./assets/levels/level1.js"></script>
+    <script defer src="./assets/models/throwable-object.class.js"></script>
+    <script defer src="./assets/js/hud.js"></script>
+    <script defer src="./assets/js/game.js"></script>
+</head>
+<body>
+    <h1>El Pollo Loco</h1>
+    <main>
+        <!-- Global orientation message -->
+        <div id="orientationMessageContainer" class="orientation-message">
+            <span>Please turn your device sideways for the best gaming experience</span>
+        </div>
+        
+        <!-- Startscreen with Start Game Button -->
+        <div id="startScreenContainer">
+            <img id="startScreen" src="./assets/img/9_intro_outro_screens/start/startscreen.png" alt="El Pollo Loco Start Screen">
+            <button id="startGameButton" onclick="init()">Start Game</button>
+        </div>
+
+        <!-- Canvas (El Pollo Loco) -->
+        <div id="canvasContainer">
+            <canvas id="canvas" width="720" height="480"></canvas>
+        </div>
+
+        <!-- HUD for the game -->
+        <div id="hud">
+            <div id="topButtonContainer">
+                <div id="playButton" class="button">
+                    <img id="playPauseButton" class="controlIcon" src="./assets/img/control images/play-buttton.png" alt="">
+                </div>
+                <div id="soundButton" class="button">
+                    <img id="soundButtonImage" class="controlIcon" src="./assets/img/control images/speaker-filled-audio-tool.png" alt="Audio Control Button">
+                </div>
+                <div id="helpButton" class="button infoButton">
+                    <img class="controlIcon" src="./assets/img/control images/info.png" alt="Info Image">
+                </div>
+            </div>
+
+            <div id="pauseOverlay">
+                <span>Game paused</span>
+            </div>
+
+            <!-- Controls to move, jump and throw -->
+            <div id="buttonContainer">
+                <div class="leftButtonSubContainer">
+                    <div id="buttonLeft" class="button">
+                        <img class="controlIcon" src="./assets/img/control images/left-arrow.png" alt="">
+                    </div>
+                    <div id="buttonRight" class="button">
+                        <img class="controlIcon" src="./assets/img/control images/right-arrow.png" alt="">
+                    </div>
+                </div>
+                <div class="rightButtonSubContainer">
+                    <div id="buttonUp" class="button">
+                        <img class="controlIcon" src="./assets/img/control images/up-arrow.png" alt="">
+                    </div>
+                    <div id="buttonThrow" class="button">
+                        <img class="throwIcon" src="./assets/img/control images/throwing.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Screen with Try Again Button -->
+        <div id="endScreenContainer">
+            <img id="endScreen" src="./assets/img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
+            <button id="restartGameButton" onclick="init()">Try Again</button>
+        </div>
+
+        <!-- Information when i-Button has been pressed (Storyline/Controls/About) -->
+        <div id="informationPopUpContainer">
+            <div id="closeOverlayButton" class="button closeButton">
+                <img class="controlIcon closeButtonIcon" src="./assets/img/control images/close.png" alt="">
+            </div>
+            <div id="informationPopUp">
+                <div class="menuPointContainer">
+                    <div id="storylineButton" class="menuPoint">
+                        <span class="menuPointText">Storyline</span>
+                    </div>
+                    <div id="controlButton" class="menuPoint">
+                        <span class="menuPointText">How to play</span>
+                    </div>
+                    <div id="aboutButton" class="menuPoint">
+                        <span class="menuPointText">About</span>
+                    </div>
+                </div>
+                <div id="gameInformationContainer">
+                    <!-- Game information content will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
