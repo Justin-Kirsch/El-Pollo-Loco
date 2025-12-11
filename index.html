@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#000000">
     <title>El Pollo Loco</title>
     <link rel="stylesheet" href="./assets/css/animation.css">
@@ -40,20 +40,52 @@
             <span>Please turn your device sideways for the best gaming experience</span>
         </div>
         
-        <!-- Startscreen with Start Game Button -->
-        <div id="startScreenContainer">
-            <img id="startScreen" src="./assets/img/9_intro_outro_screens/start/startscreen.png" alt="El Pollo Loco Start Screen">
-            <button id="startGameButton" onclick="init()">Start Game</button>
-        </div>
+        <!-- Gemeinsamer Frame für Startscreen, Canvas und HUD -->
+        <div id="gameFrame">
 
-        <!-- Canvas (El Pollo Loco) -->
-        <div id="canvasContainer">
-            <canvas id="canvas" width="720" height="480"></canvas>
-        </div>
+            <!-- Information when i-Button has been pressed (Storyline/Controls/About) -->
+            <div id="informationPopUpContainer">
+                <div id="closeOverlayButton" class="button closeButton">
+                    <img class="controlIcon closeButtonIcon" src="./assets/img/control images/close.png" alt="">
+                </div>
+                <div id="informationPopUp">
+                    <div class="menuPointContainer">
+                        <div id="storylineButton" class="menuPoint">
+                            <span class="menuPointText">Storyline</span>
+                        </div>
+                        <div id="controlButton" class="menuPoint">
+                            <span class="menuPointText">How to play</span>
+                        </div>
+                        <div id="aboutButton" class="menuPoint">
+                            <span class="menuPointText">About</span>
+                        </div>
+                    </div>
+                    <div id="gameInformationContainer">
+                        <!-- Game information content will be loaded dynamically -->
+                    </div>
+                </div>
+            </div>
 
-        <!-- HUD for the game -->
-        <div id="hud">
-            <div id="topButtonContainer">
+            <!-- Startscreen with Start Game Button -->
+            <div id="startScreenContainer">
+                <img id="startScreen" src="./assets/img/9_intro_outro_screens/start/startscreen.png" alt="El Pollo Loco Start Screen">
+                <button id="startGameButton" onclick="init()">Start Game</button>
+            </div>
+
+            <!-- Game Over Screen with Try Again Button -->
+            <div id="endScreenContainer">
+                <img id="endScreen" src="./assets/img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
+                <button id="restartGameButton" onclick="init()">Try Again</button>
+            </div>
+
+            <!-- Canvas (El Pollo Loco) -->
+            <div id="canvasContainer">
+                <canvas id="canvas" width="720" height="480"></canvas>
+            </div>
+
+            <!-- HUD for the game (Overlay über gameFrame) -->
+            <div id="hud">
+                <div id="topButtonContainer">
                 <div id="playButton" class="button">
                     <img id="playPauseButton" class="controlIcon" src="./assets/img/control images/play-buttton.png" alt="">
                 </div>
@@ -69,8 +101,8 @@
                 <span>Game paused</span>
             </div>
 
-            <!-- Controls to move, jump and throw -->
-            <div id="buttonContainer">
+                <!-- Controls to move, jump and throw -->
+                <div id="buttonContainer">
                 <div class="leftButtonSubContainer">
                     <div id="buttonLeft" class="button">
                         <img class="controlIcon" src="./assets/img/control images/left-arrow.png" alt="">
@@ -86,35 +118,6 @@
                     <div id="buttonThrow" class="button">
                         <img class="throwIcon" src="./assets/img/control images/throwing.png" alt="">
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Game Over Screen with Try Again Button -->
-        <div id="endScreenContainer">
-            <img id="endScreen" src="./assets/img/9_intro_outro_screens/game_over/game over.png" alt="Game Over">
-            <button id="restartGameButton" onclick="init()">Try Again</button>
-        </div>
-
-        <!-- Information when i-Button has been pressed (Storyline/Controls/About) -->
-        <div id="informationPopUpContainer">
-            <div id="closeOverlayButton" class="button closeButton">
-                <img class="controlIcon closeButtonIcon" src="./assets/img/control images/close.png" alt="">
-            </div>
-            <div id="informationPopUp">
-                <div class="menuPointContainer">
-                    <div id="storylineButton" class="menuPoint">
-                        <span class="menuPointText">Storyline</span>
-                    </div>
-                    <div id="controlButton" class="menuPoint">
-                        <span class="menuPointText">How to play</span>
-                    </div>
-                    <div id="aboutButton" class="menuPoint">
-                        <span class="menuPointText">About</span>
-                    </div>
-                </div>
-                <div id="gameInformationContainer">
-                    <!-- Game information content will be loaded dynamically -->
                 </div>
             </div>
         </div>

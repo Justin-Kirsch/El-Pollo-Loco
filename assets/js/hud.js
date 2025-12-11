@@ -96,25 +96,36 @@ function renderStoryline() {
 // Returns the html code for the controls, which will be rendered in the game information container
 function renderControlsInformation() {
     return /*html*/ `
-                    <div class="gameInformation">
-                        <div class="controlKeyContainer">
-                            <div class="controlInformation">
-                                <img class="controlKeyImage" src="./assets/img/control images/left-arrow.png" alt="Left arrow icon">
-                                <span class="gameInformationText">Walk Left</span>
+                    <div class="gameInformation controlsLayout">
+                        <h3 class="controlsTitle">Controls</h3>
+                        <div class="controlsGrid">
+                            <div class="controlColumn">
+                                <div class="controlItem">
+                                    <img class="controlKeyImage" src="./assets/img/control images/left-arrow.png" alt="Left arrow icon">
+                                    <div class="controlTextGroup">
+                                        <span class="controlAction">Walk Left</span>
+                                    </div>
+                                </div>
+                                <div class="controlItem">
+                                    <img class="controlKeyImage" src="./assets/img/control images/right-arrow.png" alt="Right arrow icon">
+                                    <div class="controlTextGroup">
+                                        <span class="controlAction">Walk Right</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="controlInformation">
-                                <img class="controlKeyImage" src="./assets/img/control images/right-arrow.png" alt="Right arrow icon">
-                                <span class="gameInformationText">Walk Right</span>
-                            </div>
-                        </div>
-                        <div class="controlKeyContainer">
-                            <div class="controlInformation">
-                                <img class="controlKeyImage" src="./assets/img/control images/up-arrow.png" alt="Up arrow icon">
-                                <span class="gameInformationText">Jump</span>
-                            </div>
-                            <div class="controlInformation">
-                                <img class="controlSpaceKeyImage" src="./assets/img/control images/throwing.png" alt="Throw icon">
-                                <span class="gameInformationText spaceLabel">Throw</span>
+                            <div class="controlColumn">
+                                <div class="controlItem">
+                                    <img class="controlKeyImage" src="./assets/img/control images/up-arrow.png" alt="Up arrow icon">
+                                    <div class="controlTextGroup">
+                                        <span class="controlAction">Jump</span>
+                                    </div>
+                                </div>
+                                <div class="controlItem">
+                                    <img class="controlSpaceKeyImage" src="./assets/img/control images/throwing.png" alt="Throw icon">
+                                    <div class="controlTextGroup">
+                                        <span class="controlAction spaceLabel">Throw</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>`;

@@ -1,20 +1,54 @@
 @import url('./fonts.css');
-@import url('./animation.css');
+
+/* =========================================================
+   1. Base Styles
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
 
 body {
-    padding: 0;
-    margin: 0;
-
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 16px;              /* Basis für rem-Skalierung */
+    color: #000;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    min-height: 100vh;
     background-image: url('../img/pageBackground.jpg');
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100vh;
-    font-size: 16px; /* Basis-Schriftgröße */
+}
+
+h1 {
+    margin: 1rem 0;
+    font-size: 2.5rem;
+    font-family: 'Lilita One', sans-serif;
+    text-align: center;
+    text-shadow: 0 0 0.5rem rgba(252, 230, 119, 1);
+}
+
+button {
+    font: inherit;
+    border: none;
+    background: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
 }
 
 .button,
@@ -22,308 +56,78 @@ body {
     cursor: pointer;
 }
 
-h1 {
-    color: rgb(0, 0, 0);
-    font-family: 'Lilita One', sans-serif;
-    font-size: 3.5rem; /* statt 56px */
-    text-shadow: 0px 0px 8px rgba(252, 230, 119, 1);
-}
+/* =========================================================
+   2. Layout Container
+   ========================================================= */
 
 main {
     width: 100%;
     max-width: 720px;
     margin: 0 auto;
+    padding: 0 0.5rem 1rem;
     display: flex;
     flex-direction: column;
-    text-align: center;
     align-items: center;
+    gap: 0.75rem;
 }
 
-.test {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 999;
-    aspect-ratio: auto 720 / 480;
-    max-width: 720px;
-    max-height: 480px;
+/* Gemeinsamer Frame für Startscreen, Canvas und HUD */
+#gameFrame {
+    position: relative;
     width: 100%;
-    background-color: rgba(0,0,0,0.6);
+    max-width: 720px;
 }
 
-.test span {
-    color: white;
-    font-size: 1.5rem; /* statt 24px */
-    font-family: 'Lilita One', sans-serif;
-}
-
+/* Start- und Endscreen-Container folgen immer dem Canvas-Format */
 #startScreenContainer,
 #endScreenContainer {
-    aspect-ratio: auto 720 / 480;
-    max-width: 720px;
-    max-height: 480px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+    position: absolute;
     width: 100%;
+    max-width: 720px;
     height: auto;
+    aspect-ratio: 720 / 480;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #endScreenContainer {
-    display: none;
-    position: absolute;
+    display: none; /* wird per JS eingeblendet */
+    z-index: 2;
 }
 
 #startScreen,
 #endScreen {
-    height: 100%;
     width: 100%;
+    height: 100%;
 }
 
 #endScreen {
     animation: slideIn 1s ease-in-out;
 }
 
-#startGameButton,
-#restartGameButton {
-    position: absolute;
-    bottom: 10px;
-    padding: 0.5rem 2rem; /* statt 8px 32px */
-    z-index: 99;
+/* =========================================================
+   3. Canvas
+   ========================================================= */
 
-    border-radius: 16px;
-    border: 1px solid black;
-
-    font-size: 2.5rem; /* statt 40px */
-    font-family: 'Lilita One', sans-serif;
-
-    background-color: #FFD100;
-    cursor: pointer;
-}
-
-#startGameButton:hover,
-#restartGameButton:hover {
-    transform: scale(1.03);
-    background-color: #ffdb38;
-}
-
-#startGameButton:active
-#restartGameButton:active {
-    transform: scale(.95);
-    background-color: #f7cf1f;
-}
-
+/* Basis-Regel – responsive, fixe Aspect-Ratio, keine festen Pixel */
 canvas {
-    display: none;
-    -webkit-box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7); 
-    box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7);
+    display: none;                 /* wird per JS auf display:block gesetzt */
     width: 100%;
     height: auto;
     aspect-ratio: 720 / 480;
+    box-shadow: 0 0 3rem 0.25rem rgba(0, 0, 0, 0.7);
 }
 
-@media only screen and (max-height: 480px) {
-    /* Small height screens (typically phones in landscape):
-       Let width drive the scaling instead of forcing full viewport height
-       to avoid squashed / cropped canvas. */
-
+/* Landschaftsmodus – Höhe niemals größer als die Viewport-Höhe */
+@media (orientation: landscape) {
     canvas {
-        width: 100vw;
-        height: auto;
-        -webkit-box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.7); 
-        box-shadow: 0px 0px 0px 0px rgba(0,0,0,0.7);
-    }
-
-    h1 {
-        display: none;
-    }
-
-    #endScreenContainer,
-    #startScreenContainer,
-    #hud,
-    #informationPopUpContainer  {
-        height: auto;
         max-height: 100vh;
     }
 }
 
-@media only screen and (max-width: 620px) {
-    #informationPopUp {
-        width: 70%;
-
-    }
-    .menuPointContainer {
-        gap: 16px;
-        width: 280px;
-        height: 60px;
-    }
-
-    .menuPoint {
-        width: 94px;
-        height: 40px;
-    }
-
-    .menuPointText {
-        font-size: 15px;
-    }
-
-    .gameInformationText {
-        font-size: 14px;
-    }
-
-    #closeOverlayButton {
-        right: -317px;
-        top: -150px;
-    }
-
-    .controlKeyImage {
-        height: 50px;
-        width: 50px;
-    }
-
-    .controlSpaceKeyImage {
-        height: 50px;
-        width: 76px;
-    }
-
-    .controlKeyContainer {
-        width: 270px;
-    }
-}
-
-@media only screen and (max-width: 720px) {
-    canvas {
-        width: 100vw;
-    }
-
-    #buttonContainer {
-        display: flex;
-        gap: 0px;
-    }
-
-    #endScreenContainer,
-    #startScreenContainer,
-    #endScreen,
-    #hud, 
-    #informationPopUpContainer  {
-        width: 100vw;
-    }
-
-}
-
-@media only screen and (max-width: 500px) and (min-height: 481px) {
-    .test {
-        display: flex;
-    }
-}
-
-@media only screen and (min-width: 1024px) {
-    
-}
-
-@media only screen and (max-width: 480px) {
-    body {
-        font-size: 14px;
-    }
-
-    #informationPopUp {
-        width: 90%;
-        height: auto;
-    }
-
-    .controlKeyContainer {
-        flex-direction: column;
-    }
-}
-
-@media only screen and (max-height: 480px) and (orientation: landscape) {
-    body {
-        font-size: 12px;
-    }
-
-    h1 {
-        display: none;
-    }
-
-    /* On landscape phones, use full width and keep aspect ratio
-       so the game area is centered and not cropped. */
-    #startScreenContainer,
-    #endScreenContainer,
-    #hud {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-    }
-
-    canvas {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-    }
-}
-
-/* Rename the class to be more descriptive and update styles */
-.orientation-message {
-    display: none;
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    z-index: 9999;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    top: 0;
-    left: 0;
-}
-
-#orientationMessageContainer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10000;
-}
-
-.orientation-message span {
-    color: white;
-    font-size: 1.8rem;
-    font-family: 'Lilita One', sans-serif;
-    text-align: center;
-    padding: 2rem;
-    max-width: 80%;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-/* Update media queries for better orientation detection */
-@media screen and (orientation: portrait) {
-    .orientation-message {
-        display: flex;
-    }
-}
-
-@media screen and (orientation: landscape) {
-    .orientation-message {
-        display: none;
-    }
-}
-
-/* Update media queries for better orientation detection */
-@media screen and (orientation: portrait) {
-    #orientationMessageContainer {
-        display: flex;
-    }
-}
-
-@media screen and (orientation: landscape) {
-    #orientationMessageContainer {
-        display: none;
-    }
-}
-
+/* Canvas-Wrapper zentriert den Inhalt und begrenzt auf 720px Breite */
 #canvasContainer {
     position: relative;
     width: 100%;
@@ -331,186 +135,396 @@ canvas {
     height: auto;
 }
 
-canvas {
-    display: none;
-    -webkit-box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7); 
-    box-shadow: 0px 0px 50px 4px rgba(0,0,0,0.7);
+/* =========================================================
+   4. HUD (On-Screen-Controls, Buttons)
+   ========================================================= */
+
+#hud {
+    position: absolute;            /* Overlay über gameFrame (Startscreen + Canvas) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
-    height: auto;
+    display: flex;
+    flex-direction: column;        /* oben: Top-Buttons, darunter HUD-Overlays */
+    align-items: stretch;
+    padding: 0.5rem;
+    pointer-events: none;          /* Events nur auf Buttons zulassen */
+}
+
+/* obere Buttons (Play, Sound, Info) */
+#topButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    width: 100%;
+    pointer-events: auto;
+}
+
+/* generelles Button-Styling im HUD */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem;
+    border-radius: 999px;
+    background-color: #f7cf1f;
+    border: 1px solid #000;
+    pointer-events: auto;
+}
+
+.infoButton {
+    margin-right: 1rem;
+}
+
+.controlIcon {
+    width: 1.6rem;
+    height: 1.6rem;
+}
+
+.throwIcon {
+    width: 2rem;
+    height: 2rem;
+}
+
+/* untere Steuerungs-Buttons (Links/Rechts, Springen/Werfen) */
+#buttonContainer {
+    display: none;                 /* Standard: auf größeren Screens unsichtbar */
+}
+
+.leftButtonSubContainer,
+.rightButtonSubContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+/* Pause-Overlay innerhalb des HUD */
+#pauseOverlay {
+    position: absolute;
+    inset: 0;
+    display: none; /* wird per JS gesteuert */
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    font-family: 'Lilita One', sans-serif;
+    font-size: 1.6rem;
+}
+
+/* =========================================================
+   5. Popups (Info-Overlay, Menüs)
+   ========================================================= */
+
+#informationPopUpContainer {
+    inset: 0;
+    display: none;                 /* wird per JS eingeblendet */
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 9000;
     aspect-ratio: 720 / 480;
 }
 
-#canvasContainer .orientation-message {
-    position: absolute;
-    top: 0;
-    left: 0;
+#informationPopUp {
     width: 100%;
-    height: 100%;
+    max-width: 600px;
+    margin: 0 1rem;
+    padding: 1rem;
+    background-color: rgb(188, 122, 15);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }
 
-/* Mobile and Tablet Optimizations */
-@media only screen and (max-width: 768px) {
-    body {
-        padding: 0;
-        margin: 0;
-        height: 100vh;
-        width: 100vw;
-        overflow: hidden;
+.menuPointContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    border-bottom: 3px solid black;
+    border-radius: 0.5rem;
+    width: 100%;
+    max-width: 480px;
+    margin-top: 1rem;
+    height: auto;
+    flex-wrap: wrap;
+}
+
+.menuPoint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.4rem 0.9rem;
+    background-color: rgb(246, 187, 98);
+    border-radius: 0.5rem;
+}
+
+.menuPoint:hover {
+    transform: scale(0.93);
+    box-shadow: 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.9);
+}
+
+.menuPointText {
+    color: black;
+    font-size: 1rem;
+    font-family: 'Lilita One', sans-serif;
+}
+
+.gameInformation {
+    margin: 0 1rem;
+}
+
+.gameInformationText {
+    color: black;
+    font-size: 1.1rem;
+    font-family: 'Lilita One', sans-serif;
+    text-align: start;
+    text-decoration: none;
+}
+
+#gameInformationContainer {
+    max-height: 50vh;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.controlKeyContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1.25rem;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 460px;
+}
+
+.controlInformation {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    max-width: 230px;
+}
+
+.controlKeyImage {
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.controlSpaceKeyImage {
+    width: 1.9rem;
+    height: 1.9rem;
+}
+
+#closeOverlayButton {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.closeButton {
+    width: 1.9rem;
+    height: 1.9rem;
+}
+
+.aboutSection {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 2rem;
+}
+
+.linkToSource:hover {
+    color: blue;
+    text-decoration: underline;
+}
+
+.active {
+    box-shadow: 0 0 0.5rem 0.25rem rgba(255, 255, 255, 0.9);
+}
+
+/* =========================================================
+   6. Orientation Message (Drehen-Hinweis)
+   ========================================================= */
+
+/* Hinweis-Layer, der NICHT blockiert (pointer-events: none) */
+#orientationMessageContainer {
+    position: fixed;
+    inset: 0;
+    display: none;                 /* nur in Portrait anzeigen */
+    align-items: center;
+    justify-content: center;
+    z-index: 9500;
+    pointer-events: none;          /* Klicks gehen zum Spiel durch */
+}
+
+.orientation-message {
+    width: 100%;
+    height: 100%;
+    display: flex;                 /* Sichtbarkeit per Media Query */
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.orientation-message span {
+    max-width: 80%;
+    color: #fff;
+    font-family: 'Lilita One', sans-serif;
+    font-size: 1.4rem;
+    text-align: center;
+    text-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.7);
+}
+
+/* =========================================================
+   7. Media Queries (geordnet)
+   ========================================================= */
+
+/* --- 7.1 Portrait / Landscape Verhalten des Orientation-Hinweises --- */
+
+@media (orientation: portrait) {
+    #orientationMessageContainer {
+        display: flex;
     }
-    
+}
+
+@media (orientation: landscape) {
+    #orientationMessageContainer {
+        display: none;
+    }
+}
+
+/* --- 7.2 Bis max-width: 768px (typische Smartphones / kleine Tablets) --- */
+
+@media (max-width: 768px) {
+    body {
+        font-size: 15px;
+    }
+
     h1 {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
         margin: 0.5rem 0;
     }
-    
-    main {
-        height: calc(100vh - 4rem);
-        justify-content: center;
-    }
-    
-    #canvasContainer, 
-    #startScreenContainer,
-    #endScreenContainer {
-        width: 100%;
-        max-width: 100%;
-        height: auto;
-    }
-    
-    #startScreen,
-    #endScreen {
-        object-fit: contain;
-    }
-    
-    #startGameButton,
-    #restartGameButton {
-        font-size: 2rem;
-        padding: 0.4rem 1.5rem;
-    }
-    
+
     #hud {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
+        gap: 0.4rem;
     }
-    
+
+    #topButtonContainer {
+        justify-content: flex-end;
+    }
+
     .button {
-        touch-action: manipulation;
+        padding: 0.35rem;
     }
-    
+
     .controlIcon {
         width: 1.5rem;
         height: 1.5rem;
     }
+
+    .throwIcon {
+        width: 1.9rem;
+        height: 1.9rem;
+    }
+
+    #informationPopUp {
+        max-width: 90%;
+        padding: 0.75rem;
+    }
+
+    /* Mobile: Touch-Steuerung am unteren Rand des Canvas anzeigen */
+    #buttonContainer {
+        display: flex;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 21.75rem;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0.75rem;
+        gap: 0.75rem;
+        pointer-events: auto;
+    }
 }
 
-/* Specific styles for very small devices */
-@media only screen and (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
+/* --- 7.3 Bis max-width: 480px (sehr kleine Geräte) --- */
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
     }
-    
+
+    h1 {
+        font-size: 1.8rem;
+        margin-top: 0.5rem;
+    }
+
+    #buttonContainer {
+        gap: 0.5rem;
+    }
+
     .controlIcon {
+        width: 1.4rem;
+        height: 1.4rem;
+    }
+
+    .throwIcon {
         width: 1.8rem;
         height: 1.8rem;
     }
-    
+
     #startGameButton,
     #restartGameButton {
-        font-size: 1.8rem;
-        padding: 0.3rem 1.2rem;
+        font-size: 1.4rem;
+        padding: 0.25rem 1rem;
+        z-index: 5;
     }
-}
 
-/* Landscape orientation specific styles */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    h1 {
-        display: none;
-    }
-    
-    main {
-        height: 100vh;
-    }
-    
-    #canvasContainer, 
-    #startScreenContainer {
-        width: 100vw;
-        height: auto;
+    #informationPopUp {
         max-width: 100%;
-        max-height: 100vh;
-        aspect-ratio: 720 / 480;
+        margin: 0 0.5rem;
     }
-    
-    canvas, 
-    #startScreen {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-        margin: 0 auto;
+
+    .controlKeyContainer {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
-/* Make sure startScreenContainer matches canvas size in landscape mode */
-@media screen and (orientation: landscape) {
-    #startScreenContainer {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-    }
+/* --- 7.4 Start-/End-Buttons (bleiben flexibel, ohne feste px) --- */
+
+#startGameButton,
+#restartGameButton {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.4rem 1.8rem;
+    border-radius: 1rem;
+    border: 1px solid #000;
+    font-size: 1.8rem;
+    font-family: 'Lilita One', sans-serif;
+    background-color: #ffd100;
+    cursor: pointer;
+    transition: transform 0.1s ease, background-color 0.1s ease;
 }
 
-/* Landscape orientation specific styles for small height screens */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    h1 {
-        display: none;
-    }
-    
-    main {
-        height: 100vh;
-    }
-    
-    #canvasContainer, 
-    #startScreenContainer {
-        width: 100vw;
-        height: auto;
-        max-width: 100%;
-        max-height: 100vh;
-        aspect-ratio: 720 / 480;
-    }
-
-    #startScreenContainer,
-    #endScreenContainer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-    }
-
-    #playButton,
-    #soundButton,
-    #helpButton {
-        width: 40px;
-        height: 40px;
-    }
-    
-    canvas, 
-    #startScreen {
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-        margin: 0 auto;
-    }
+#startGameButton:hover,
+#restartGameButton:hover {
+    transform: translateX(-50%) scale(1.03);
+    background-color: #ffdb38;
 }
 
-@media only screen and (max-width: 768px) and (orientation: landscape) {
-    #startScreenContainer,
-    #endScreenContainer {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: auto;
-        max-height: 100vh;
-    }
+#startGameButton:active,
+#restartGameButton:active {
+    transform: translateX(-50%) scale(0.97);
+    background-color: #f7cf1f;
 }
