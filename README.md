@@ -2,6 +2,8 @@
 
 El Pollo Loco is a small 2D browser game inspired by classic side-scrolling platformers. You play as **Pepe Peligroso**, a courageous hero from the Mexican village of San Miguelito, who takes on an unusual threat: **giant chickens**. Armed only with empty salsa bottles and your reflexes, you must fight your way through the fields and bring peace back to the village.
 
+<img width="855" height="645" alt="{A70F06AF-6659-471D-947C-8111DAEC55E7}" src="https://github.com/user-attachments/assets/56ad80bf-4501-476b-b65a-5b26cb60eccf" />
+
 ## Features
 
 - **Arcade-style side-scrolling gameplay** on an HTML5 canvas
